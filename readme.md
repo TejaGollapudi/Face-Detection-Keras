@@ -3,6 +3,7 @@
 <Br>
   
 ![Examples from validation set](./examples/demo_gif.gif)
+  <br>
   The images in the gif are obtained from running the model on the validation set of Wider Faces dataset.
 
 
