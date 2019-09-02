@@ -71,7 +71,11 @@ live_demo.py.
 ```
 python live_demo.py
 ```
-To run the detector 
+To run the detector on a video of choice 
+  In Line 83 of demo.py replace video.mp4 with location of the video on which you want to detect faces.
+  ```
+python demo.py
+```
 
 
 
