@@ -1,6 +1,6 @@
 # Fast Multi Face Detection 
 ### Sivateja Gollapudi
-![Alt Text](./examples/17.jpg)
+![examples from validation set](./examples/demo_gif.gif)
 
 ## Table of contents
 
