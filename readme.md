@@ -1,4 +1,4 @@
-# Fast Multi Face Detection 
+# Fast Multi-scale Face Detection ConvNet 
 ### Sivateja Gollapudi
 <Br>
   
