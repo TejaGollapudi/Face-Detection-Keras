@@ -57,7 +57,7 @@ conda create -n yourenvname python=preffered python version
 conda activate yourenvname
 pip install tensorflow==1.7.0
 ```
-Later on you can use the Tensorflow 1.7 enviroment again by simply activating the previous environment
+Later on you can use the Tensorflow 1.7 enviroment again by activating the previously created environment.
 ```
 conda activate yourenvname
 ```
