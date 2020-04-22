@@ -66,6 +66,7 @@ To deactivate run
 conda deactivate 
 ```
 
+Keras version 2.2.3. was used for this model.
 ### 5. Running the detector <a name="detector"></a>
 To run the face detector on the video stream obtained from Pc's camera run 
 live_demo.py.
