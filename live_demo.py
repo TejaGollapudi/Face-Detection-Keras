@@ -18,6 +18,8 @@ from ssd_encoder_decoder.ssd_output_decoder import decode_detections, decode_det
 
 img_height = 512
 img_width = 512
+print('-'*80+'\n')
+print('\t'*5+'INITITALIZING SESSSION')
 
 K.clear_session() # Clear previous models from memory.
 
@@ -60,24 +62,29 @@ model = ssd_512(image_size=(img_height, img_width, img_channels),
                 subtract_mean=mean_color,
                 swap_channels=swap_channels)
 
-# 2: Load some weights into the model.
-print('loading weights')
+# 2: Load model weights.
+print('-'*80+'\n')
+print('\t'*5+'Loading Weights')
 
 # TODO: Set the path to the weights you want to load.
 weights_path = './ssd_512/ssd512_face_epoch-31_loss-2.9192_val_loss-3.1465.h5'
 
 model.load_weights(weights_path, by_name=True)
 
-print('weights loaded....................')
+print('-'*80+'\n')
+print('\t'*5+'Weights Loaded')
 
 
-sgd = SGD(lr=0.0001, momentum=0.9, decay=0.0, nesterov=False)
+#sgd = SGD(lr=0.0001, momentum=0.9, decay=0.0, nesterov=False)
 
-ssd_loss = SSDLoss(neg_pos_ratio=3, alpha=1.0)
+#ssd_loss = SSDLoss(neg_pos_ratio=3, alpha=1.0)
 
-model.compile(optimizer=sgd, loss=ssd_loss.compute_loss)
+#model.compile(optimizer=sgd, loss=ssd_loss.compute_loss)
 model.summary()
 
+print('-'*80+'\n')
+print('\t'*5+'Initiating Video Capture')
+print('\t'*5+ 'Press  q   to quit')
 
 #initiate caputure of video through pc's camera.
 cap = cv2.VideoCapture(0)
@@ -101,10 +108,7 @@ while True:
                                    img_width=img_width)
 
     np.set_printoptions(precision=2, suppress=True, linewidth=90)
-    print("Predicted boxes:\n")
-    print('   class   conf xmin   ymin   xmax   ymax')
-    print(y_pred_thresh[0])
-    
+    #
     
     classes = ['background',
            'face']
@@ -114,9 +118,8 @@ while True:
 
 
     for box in y_pred_thresh[0]:
-    	print(box)
     	cv2.rectangle(frame2, (int(box[2]),int( box[3])), (int(box[4]), int(box[5])), (0, 255, 255), 5) 
-    cv2.imshow("faces detection", frame2)
+    cv2.imshow("Face Detection", frame2)
 
     if cv2.waitKey(1) & 0xFF == ord('q'): #press q to stop capture 
         break

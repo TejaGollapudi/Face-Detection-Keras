@@ -5,6 +5,7 @@ from keras.optimizers import Adam,SGD
 import numpy as np
 from matplotlib import pyplot as plt
 import cv2
+import sys
 
 from models.keras_ssd512 import ssd_512
 from keras_loss_function.keras_ssd_loss import SSDLoss
@@ -18,8 +19,17 @@ from ssd_encoder_decoder.ssd_output_decoder import decode_detections, decode_det
 
 img_height = 512
 img_width = 512
-
+print('-'*80+'\n')
+print('\t'*5+'INITITALIZING SESSSION')
 K.clear_session() # Clear previous models from memory.
+
+if len(sys.argv)!=2:
+    print('\n'*2)
+
+    print('\t Please provide path to the video file as a command line arg')
+    print('\t python demo.py ./path/to/video/file.avi')
+    exit()
+
 
 img_height = 512 # Height of the model input images
 img_width = 512 # Width of the model input images
@@ -61,26 +71,26 @@ model = ssd_512(image_size=(img_height, img_width, img_channels),
                 swap_channels=swap_channels)
 
 # 2: Load some weights into the model.
-print('loading weights')
+print('-'*80+'\n')
+print('\t'*5+'Loading Weights')
 
 # TODO: Set the path to the weights you want to load.
 weights_path = './ssd_512/ssd512_face_epoch-31_loss-2.9192_val_loss-3.1465.h5'
 
 model.load_weights(weights_path, by_name=True)
 
-print('weights loaded....................')
+print('-'*80+'\n')
+print('\t'*5+'Weights Loaded')
 
-
-sgd = SGD(lr=0.0001, momentum=0.9, decay=0.0, nesterov=False)
-
-ssd_loss = SSDLoss(neg_pos_ratio=3, alpha=1.0)
-
-model.compile(optimizer=sgd, loss=ssd_loss.compute_loss)
 model.summary()
 
+print('-'*80+'\n')
+print('\t'*5+'Initiating Video Capture')
+print('\t'*5+ 'Press  q   to quit')
 
-#replace video.mp4 with location of the video on which you want to run the algorithm.
-cap = cv2.VideoCapture('./video.mp4') 
+
+#load the video
+cap = cv2.VideoCapture(str(sys.argv[1])) 
 
 
 
@@ -100,9 +110,6 @@ while True:
                                    img_width=img_width)
 
     np.set_printoptions(precision=2, suppress=True, linewidth=90)
-    print("Predicted boxes:\n")
-    print('   class   conf xmin   ymin   xmax   ymax')
-    print(y_pred_thresh[0])
     
     
     classes = ['background',
@@ -113,7 +120,6 @@ while True:
 
 
     for box in y_pred_thresh[0]:
-    	print(box)
     	cv2.rectangle(frame2, (int(box[2]),int( box[3])), (int(box[4]), int(box[5])), (0, 255, 255), 5) 
     cv2.imshow("faces detection", frame2)
 
